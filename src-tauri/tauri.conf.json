@@ -22,8 +22,8 @@
                 "depends": []
             },
             "externalBin": [],
-            "icon": [],
-            "identifier": "com.tauri.dev",
+            "icon": ["icons/icon.ico"],
+            "identifier": "tes3automaton",
             "longDescription": "",
             "macOS": {
                 "entitlements": null,
