@@ -20,109 +20,126 @@ import SettingsView from "./views/SettingsView";
 const drawerWidth = 240;
 
 const Dummy = () => {
-  return <>This is a placeholder component. Nothing fun yet.</>;
+    return <>This is a placeholder component. Nothing fun yet.</>;
 };
 
 export type View = {
-  text: string;
-  icon: React.ReactElement;
-  view: React.ReactElement;
+    text: string;
+    icon: React.ReactElement;
+    view: React.ReactElement;
 };
 
 const viewGroups: View[][] = [
-  [
-    {
-      text: "Asset Respec",
-      icon: <SettingsInputComponentIcon />,
-      view: <RespecView />,
-    },
-  ],
-  [
-    {
-      text: "Settings",
-      icon: <SettingsIcon />,
-      view: <SettingsView />,
-    },
-  ],
+    [
+        {
+            text: "Asset Respec",
+            icon: <SettingsInputComponentIcon />,
+            view: <RespecView />,
+        },
+    ],
+    [
+        {
+            text: "Settings",
+            icon: <SettingsIcon />,
+            view: <SettingsView />,
+        },
+    ],
 ];
 
 export default function AppContainer() {
-  const [groupIndex, setGroupIndex] = useState(0);
-  const [index, setIndex] = useState(0);
+    const [groupIndex, setGroupIndex] = useState(0);
+    const [index, setIndex] = useState(0);
 
-  return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-      >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            {viewGroups[groupIndex][index].text}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <List>
-          <ListItem key={"Header"} disablePadding>
-            <ListItemButton>
-              <ListItemText primary={"TES3 Automaton"} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        {viewGroups.map(
-          (viewGroup: View[], mapGroupIndex: number): React.ReactElement => {
-            return (
-              <>
-                <Divider />
-                {viewGroup.map(
-                  (view: View, mapIndex: number): React.ReactElement => {
-                    return (
-                      <List>
-                        <ListItem
-                          key={view.text}
-                          disablePadding
-                          selected={
-                            mapGroupIndex == groupIndex && mapIndex == index
-                          }
-                        >
-                          <ListItemButton
-                            onClick={() => {
-                              setGroupIndex(mapGroupIndex);
-                              setIndex(mapIndex);
-                            }}
-                          >
-                            <ListItemIcon>{view.icon}</ListItemIcon>
-                            <ListItemText primary={view.text} />
-                          </ListItemButton>
-                        </ListItem>
-                      </List>
-                    );
-                  }
+    return (
+        <Box sx={{ display: "flex" }}>
+            <CssBaseline />
+            <AppBar
+                position="fixed"
+                sx={{
+                    width: `calc(100% - ${drawerWidth}px)`,
+                    ml: `${drawerWidth}px`,
+                }}
+            >
+                <Toolbar>
+                    <Typography variant="h6" noWrap component="div">
+                        {viewGroups[groupIndex][index].text}
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Drawer
+                sx={{
+                    width: drawerWidth,
+                    flexShrink: 0,
+                    "& .MuiDrawer-paper": {
+                        width: drawerWidth,
+                        boxSizing: "border-box",
+                    },
+                }}
+                variant="permanent"
+                anchor="left"
+            >
+                <List>
+                    <ListItem key={"Header"} disablePadding>
+                        <ListItemButton>
+                            <ListItemText primary={"TES3 Automaton"} />
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+                {viewGroups.map(
+                    (
+                        viewGroup: View[],
+                        mapGroupIndex: number
+                    ): React.ReactElement => {
+                        return (
+                            <>
+                                <Divider />
+                                {viewGroup.map(
+                                    (
+                                        view: View,
+                                        mapIndex: number
+                                    ): React.ReactElement => {
+                                        return (
+                                            <List>
+                                                <ListItem
+                                                    key={view.text}
+                                                    disablePadding
+                                                    selected={
+                                                        mapGroupIndex ==
+                                                            groupIndex &&
+                                                        mapIndex == index
+                                                    }
+                                                >
+                                                    <ListItemButton
+                                                        onClick={() => {
+                                                            setGroupIndex(
+                                                                mapGroupIndex
+                                                            );
+                                                            setIndex(mapIndex);
+                                                        }}
+                                                    >
+                                                        <ListItemIcon>
+                                                            {view.icon}
+                                                        </ListItemIcon>
+                                                        <ListItemText
+                                                            primary={view.text}
+                                                        />
+                                                    </ListItemButton>
+                                                </ListItem>
+                                            </List>
+                                        );
+                                    }
+                                )}
+                            </>
+                        );
+                    }
                 )}
-              </>
-            );
-          }
-        )}
-      </Drawer>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, bgcolor: "background.default", p: 3, pt: 8 }}
-      >
-        {viewGroups[groupIndex][index].view}
-      </Box>
-    </Box>
-  );
+            </Drawer>
+            <Box
+                component="main"
+                sx={{ flexGrow: 1, bgcolor: "background.default", p: 3, pt: 8 }}
+            >
+                {viewGroups[groupIndex][index].view}
+            </Box>
+        </Box>
+    );
 }
