@@ -1,13 +1,12 @@
-import CssBaseline from "@mui/material/CssBaseline";
-import Container from "./components/Container";
+import AppContainer from "./components/AppContainer";
+import DarkModeProvider from "./DarkModeProvider";
 
 function App() {
-    return (
-        <>
-            <CssBaseline />
-            <Container />
-        </>
-    );
+  return (
+    <DarkModeProvider>
+      <AppContainer />
+    </DarkModeProvider>
+  );
 }
 
 export default App;
