@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cargo check",
+            "type": "shell",
+            "command": "cargo check",
+            "options": {
+                "cwd": "${workspaceFolder}/src-tauri"
+            },
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
+            "label": "cargo fmt",
+            "type": "shell",
+            "command": "cargo fmt",
+            "options": {
+                "cwd": "${workspaceFolder}/src-tauri"
+            },
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
+            "label": "tauri dev",
+            "type": "shell",
+            "command": "yarn tauri dev",
+            "presentation": {
+                "clear": true
+            }
+        }
+    ]
+}
