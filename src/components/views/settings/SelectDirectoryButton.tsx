@@ -6,17 +6,17 @@ import {
 } from "@mui/material";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 
-import { invoke } from "@tauri-apps/api/tauri";
 import { open } from "@tauri-apps/api/dialog";
 import { useState } from "react";
 import { workingDirectoryState } from "../../../atoms";
 import { useRecoilState } from "recoil";
+import { collectFiles } from "../../../commands";
 
 export function SelectDirectoryButton() {
     const [directory, setDirectory] = useRecoilState(workingDirectoryState);
     const [files, setFiles] = useState([] as string[]);
 
-    const collectFiles = async function () {
+    const onClick = async function () {
         const selected = await open({ directory: true, multiple: false });
         if (typeof selected != "string") {
             return;
@@ -25,12 +25,7 @@ export function SelectDirectoryButton() {
         setDirectory(selected);
 
         try {
-            const files = await invoke("collect_files", {
-                path: selected,
-                extensions: ["nif"],
-            });
-
-            console.log(files);
+            const files = await collectFiles(selected, ["nif"]);
             setFiles(files as string[]);
         } catch (error) {
             console.error(error);
@@ -42,7 +37,7 @@ export function SelectDirectoryButton() {
             <FormGroup>
                 <FormControlLabel
                     control={
-                        <IconButton color="inherit" onClick={collectFiles}>
+                        <IconButton color="inherit" onClick={onClick}>
                             {<FolderOpenIcon />}
                         </IconButton>
                     }

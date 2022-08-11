@@ -31,8 +31,8 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { workingDirectoryState } from "../../atoms";
 
-import { invoke } from "@tauri-apps/api/tauri";
 import { open } from "@tauri-apps/api/dialog";
+import { collectFiles } from "../../commands";
 
 function Row(props: { row: string }) {
     const { row } = props;
@@ -107,17 +107,14 @@ export default function RespecView() {
     const directory = useRecoilValue(workingDirectoryState);
     const [files, setFiles] = useState([] as string[]);
 
-    const collectFiles = async function () {
+    const onClick = async function () {
         const selected = await open({ directory: true, multiple: false });
         if (typeof selected != "string") {
             return;
         }
 
         try {
-            const files = await invoke("collect_files", {
-                path: selected,
-                extensions: ["nif"],
-            });
+            const files = await collectFiles(selected, ["nif"]);
 
             console.log(files);
             setFiles(files as string[]);
@@ -186,10 +183,7 @@ export default function RespecView() {
                                 </Box>
                             </Box>
                             <Box p={3} pt={0}>
-                                <Button
-                                    onClick={collectFiles}
-                                    variant="contained"
-                                >
+                                <Button onClick={onClick} variant="contained">
                                     Search
                                 </Button>
                             </Box>
