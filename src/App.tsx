@@ -1,11 +1,14 @@
+import { RecoilRoot } from "recoil";
 import AppContainer from "./components/AppContainer";
 import DarkModeProvider from "./DarkModeProvider";
 
 function App() {
     return (
-        <DarkModeProvider>
-            <AppContainer />
-        </DarkModeProvider>
+        <RecoilRoot>
+            <DarkModeProvider>
+                <AppContainer />
+            </DarkModeProvider>
+        </RecoilRoot>
     );
 }
 

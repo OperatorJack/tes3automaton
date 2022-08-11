@@ -1,24 +1,10 @@
-import {
-    createTheme,
-    ThemeProvider,
-    PaletteMode,
-    CssBaseline,
-} from "@mui/material";
+import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import React from "react";
-import { ColorModeContext } from "./contexts/ColorModeContext";
+import { useRecoilValue } from "recoil";
+import { colorModeState } from "./atoms";
 
 function DarkModeProvider({ children }: { children?: React.ReactNode }) {
-    const [mode, setMode] = React.useState("dark" as PaletteMode);
-    const colorMode = React.useMemo(
-        () => ({
-            toggleColorMode: () => {
-                setMode((prevMode) =>
-                    prevMode === "light" ? "dark" : "light"
-                );
-            },
-        }),
-        []
-    );
+    const mode = useRecoilValue(colorModeState);
 
     const theme = React.useMemo(
         () =>
@@ -31,12 +17,10 @@ function DarkModeProvider({ children }: { children?: React.ReactNode }) {
     );
 
     return (
-        <ColorModeContext.Provider value={colorMode}>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                {children}
-            </ThemeProvider>
-        </ColorModeContext.Provider>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            {children}
+        </ThemeProvider>
     );
 }
 
