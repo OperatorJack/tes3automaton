@@ -1,8 +1,6 @@
 import {
-    Container,
     Paper,
     Box,
-    FormGroup,
     TextField,
     Checkbox,
     FormControlLabel,
@@ -22,18 +20,20 @@ import {
     IconButton,
     Typography,
 } from "@mui/material";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
-import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { workingDirectoryState } from "../../atoms";
 
-import { open } from "@tauri-apps/api/dialog";
 import { collectFiles } from "../../commands";
 import { SelectDirectoryButton } from "./settings/SelectDirectoryButton";
+import {
+    LetterLowerCaseIcon,
+    LetterPascalCaseIcon,
+    LetterUpperCaseIcon,
+    LetterCamelCaseIcon,
+} from "../../assets/Icons";
 
 function Row(props: { row: string }) {
     const { row } = props;
@@ -176,20 +176,30 @@ export default function RespecView() {
                                     <ToggleButton
                                         value="lowercase"
                                         aria-label="lower case"
+                                        title="Lower case"
                                     >
-                                        <FormatAlignLeftIcon />
+                                        <LetterLowerCaseIcon />
                                     </ToggleButton>
                                     <ToggleButton
-                                        value="pascalcase"
+                                        value="uppercase"
+                                        aria-label="upper case"
+                                        title="Upper case"
+                                    >
+                                        <LetterUpperCaseIcon />
+                                    </ToggleButton>
+                                    <ToggleButton
+                                        value="pascal"
                                         aria-label="pascal case"
+                                        title="Pascal case"
                                     >
-                                        <FormatAlignCenterIcon />
+                                        <LetterPascalCaseIcon />
                                     </ToggleButton>
                                     <ToggleButton
-                                        value="capitalized"
-                                        aria-label="capitalized"
+                                        value="camel"
+                                        aria-label="camel case"
+                                        title="Camel case"
                                     >
-                                        <FormatAlignRightIcon />
+                                        <LetterCamelCaseIcon />
                                     </ToggleButton>
                                 </ToggleButtonGroup>
                             </Box>
