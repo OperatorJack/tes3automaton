@@ -7,6 +7,7 @@ import {
     Paper,
 } from "@mui/material";
 import { DarkModeToggleButton } from "./settings/DarkModeToggleButton";
+import { SelectDirectoryButton } from "./settings/SelectDirectoryButton";
 
 export default function SettingsView() {
     return (
@@ -15,6 +16,13 @@ export default function SettingsView() {
                 <Box m={3}>
                     <FormGroup>
                         <DarkModeToggleButton />
+                    </FormGroup>
+                </Box>
+            </Paper>
+            <Paper elevation={3}>
+                <Box m={3}>
+                    <FormGroup>
+                        <SelectDirectoryButton />
                     </FormGroup>
                 </Box>
             </Paper>
