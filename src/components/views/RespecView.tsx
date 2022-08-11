@@ -33,6 +33,7 @@ import { workingDirectoryState } from "../../atoms";
 
 import { open } from "@tauri-apps/api/dialog";
 import { collectFiles } from "../../commands";
+import { SelectDirectoryButton } from "./settings/SelectDirectoryButton";
 
 function Row(props: { row: string }) {
     const { row } = props;
@@ -108,13 +109,8 @@ export default function RespecView() {
     const [files, setFiles] = useState([] as string[]);
 
     const onClick = async function () {
-        const selected = await open({ directory: true, multiple: false });
-        if (typeof selected != "string") {
-            return;
-        }
-
         try {
-            const files = await collectFiles(selected, ["nif"]);
+            const files = await collectFiles(directory, ["nif"]);
 
             console.log(files);
             setFiles(files as string[]);
@@ -125,73 +121,88 @@ export default function RespecView() {
 
     return (
         <Grid container spacing={2}>
-            <Grid item md={3} xl={2}>
+            <Grid item xl={2}>
+                <Paper elevation={3}>
+                    <Box m={3} p={2}>
+                        <Typography variant="h6">Description</Typography>
+                        <Typography variant="body2">
+                            Asset Respec allows you to search for NIF files in a
+                            directory and remap the NIF file and its related
+                            textures to new file names. This is useful when you
+                            are taking another mod's resources and you want to
+                            re-name them in bulk to be used in your mod without
+                            conflicts.
+                        </Typography>
+                    </Box>
+                </Paper>
                 <Paper elevation={3}>
                     <Stack m={3}>
-                        <FormGroup>
-                            <Box p={3}>
-                                <TextField
-                                    id="search"
-                                    label="Search For"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                                <FormControlLabel
-                                    control={<Checkbox defaultChecked />}
-                                    label="Use regular expressions"
-                                />
-                                <FormControlLabel
-                                    control={<Checkbox defaultChecked />}
-                                    label="Case Sensitive"
-                                />
-                            </Box>
-                            <Divider variant="middle" />
-                            <Box p={3}>
-                                <TextField
-                                    id="replace"
-                                    label="Replace With"
-                                    variant="outlined"
-                                    fullWidth
-                                />
+                        <Box p={2}>
+                            <SelectDirectoryButton />
+                        </Box>
+                        <Divider variant="middle" />
+                        <Box p={2}>
+                            <TextField
+                                id="search"
+                                label="Search For"
+                                variant="outlined"
+                                fullWidth
+                            />
+                            <FormControlLabel
+                                control={<Checkbox defaultChecked />}
+                                label="Use regular expressions"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox defaultChecked />}
+                                label="Case Sensitive"
+                            />
+                        </Box>
+                        <Divider variant="middle" />
+                        <Box p={2}>
+                            <TextField
+                                id="replace"
+                                label="Replace With"
+                                variant="outlined"
+                                fullWidth
+                            />
 
-                                <Box pt={3}>
-                                    <ToggleButtonGroup
-                                        //value={alignment}
-                                        exclusive
-                                        //onChange={handleAlignment}
-                                        aria-label="text alignment"
+                            <Box pt={2}>
+                                <ToggleButtonGroup
+                                    //value={alignment}
+                                    exclusive
+                                    //onChange={handleAlignment}
+                                    aria-label="text alignment"
+                                >
+                                    <ToggleButton
+                                        value="lowercase"
+                                        aria-label="lower case"
                                     >
-                                        <ToggleButton
-                                            value="lowercase"
-                                            aria-label="lower case"
-                                        >
-                                            <FormatAlignLeftIcon />
-                                        </ToggleButton>
-                                        <ToggleButton
-                                            value="pascalcase"
-                                            aria-label="pascal case"
-                                        >
-                                            <FormatAlignCenterIcon />
-                                        </ToggleButton>
-                                        <ToggleButton
-                                            value="capitalized"
-                                            aria-label="capitalized"
-                                        >
-                                            <FormatAlignRightIcon />
-                                        </ToggleButton>
-                                    </ToggleButtonGroup>
-                                </Box>
+                                        <FormatAlignLeftIcon />
+                                    </ToggleButton>
+                                    <ToggleButton
+                                        value="pascalcase"
+                                        aria-label="pascal case"
+                                    >
+                                        <FormatAlignCenterIcon />
+                                    </ToggleButton>
+                                    <ToggleButton
+                                        value="capitalized"
+                                        aria-label="capitalized"
+                                    >
+                                        <FormatAlignRightIcon />
+                                    </ToggleButton>
+                                </ToggleButtonGroup>
                             </Box>
-                            <Box p={3} pt={0}>
-                                <Button onClick={onClick} variant="contained">
-                                    Search
-                                </Button>
-                            </Box>
-                        </FormGroup>
+                        </Box>
+                        <Box p={2} pt={0}>
+                            <Button onClick={onClick} variant="contained">
+                                Search
+                            </Button>
+                        </Box>
                     </Stack>
                 </Paper>
             </Grid>
-            <Grid item md={9} xl={10}>
+            <Grid item xl={10}>
                 <Paper elevation={3}>
                     <Box m={3} p={3}>
                         <TableContainer>
@@ -199,7 +210,7 @@ export default function RespecView() {
                                 stickyHeader
                                 sx={{ minWidth: 650 }}
                                 size="small"
-                                aria-label="a dense table"
+                                aria-label="asset table"
                             >
                                 <TableHead>
                                     <TableRow>

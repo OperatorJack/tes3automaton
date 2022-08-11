@@ -17,7 +17,7 @@ export default function SettingsView() {
                         <ZoomSelector />
                     </FormGroup>
                 </Box>
-                <Box m={3}>
+                <Box m={3} pb={3}>
                     <FormGroup>
                         <SelectDirectoryButton />
                     </FormGroup>
