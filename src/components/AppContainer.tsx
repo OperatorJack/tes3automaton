@@ -15,7 +15,6 @@ import {
     Toolbar,
     Typography,
     styled,
-    useTheme,
 } from "@mui/material";
 
 import MuiAppBar, { AppBarProps } from "@mui/material/AppBar";
