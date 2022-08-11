@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { useRecoilValue } from "recoil";
 
 import {
+    AppBar,
+    AppBarProps,
     Box,
     CSSObject,
     CssBaseline,
     Divider,
+    Drawer,
     IconButton,
     List,
     ListItem,
@@ -17,14 +21,9 @@ import {
     styled,
 } from "@mui/material";
 
-import MuiAppBar, { AppBarProps } from "@mui/material/AppBar";
-import MuiDrawer from "@mui/material/Drawer";
-
 import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputComponent";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MenuIcon from "@mui/icons-material/Menu";
-
-import { useRecoilValue } from "recoil";
 
 import RespecView from "./views/RespecView";
 import SettingsView from "./views/SettingsView";
@@ -54,7 +53,7 @@ export default function AppContainer() {
 
     const [viewIndex, setViewIndex] = useState(0);
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     const onOpened = () => setOpen(true);
     const onClosed = () => setOpen(false);
@@ -62,7 +61,7 @@ export default function AppContainer() {
     return (
         <Box sx={{ display: "flex", zoom: zoom }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open}>
+            <MiniAppBar position="fixed" open={open}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -80,8 +79,8 @@ export default function AppContainer() {
                         {views[viewIndex].text}
                     </Typography>
                 </Toolbar>
-            </AppBar>
-            <Drawer variant="permanent" open={open}>
+            </MiniAppBar>
+            <MiniDrawer variant="permanent" open={open}>
                 <DrawerHeader>
                     <Typography variant="h6" noWrap component="div">
                         TES3 Automaton
@@ -105,7 +104,7 @@ export default function AppContainer() {
                         </ListItem>
                     ))}
                 </List>
-            </Drawer>
+            </MiniDrawer>
 
             <Box
                 component="main"
@@ -159,7 +158,7 @@ interface MiniAppBarProps extends AppBarProps {
     open?: boolean;
 }
 
-const AppBar = styled(MuiAppBar, {
+const MiniAppBar = styled(AppBar, {
     shouldForwardProp: (prop) => prop !== "open",
 })<MiniAppBarProps>(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
@@ -177,7 +176,7 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-const Drawer = styled(MuiDrawer, {
+const MiniDrawer = styled(Drawer, {
     shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
     width: drawerWidth,
