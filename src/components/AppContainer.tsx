@@ -24,7 +24,7 @@ import {
 import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputComponent";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MenuIcon from "@mui/icons-material/Menu";
-
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import RespecView from "./views/RespecView";
 import SettingsView from "./views/SettingsView";
 import { zoomPercentSelector } from "../atoms";
@@ -52,11 +52,9 @@ export default function AppContainer() {
     const zoom = useRecoilValue(zoomPercentSelector);
 
     const [viewIndex, setViewIndex] = useState(0);
+    const [open, setOpen] = useState(true);
 
-    const [open, setOpen] = React.useState(true);
-
-    const onOpened = () => setOpen(true);
-    const onClosed = () => setOpen(false);
+    const toggleOpen = () => setOpen(!open);
 
     return (
         <Box sx={{ display: "flex", zoom: zoom }}>
@@ -66,14 +64,14 @@ export default function AppContainer() {
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={onOpened}
+                        onClick={toggleOpen}
                         edge="start"
                         sx={{
                             marginRight: 4,
-                            ...(open && { display: "none" }),
                         }}
                     >
-                        <MenuIcon />
+                        {!open && <MenuIcon />}
+                        {open && <MenuOpenIcon />}
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
                         {views[viewIndex].text}
@@ -85,9 +83,6 @@ export default function AppContainer() {
                     <Typography variant="h6" noWrap component="div">
                         TES3 Automaton
                     </Typography>
-                    <IconButton onClick={onClosed}>
-                        <MenuIcon />
-                    </IconButton>
                 </DrawerHeader>
                 <Divider />
                 <List>
@@ -148,7 +143,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
 const DrawerHeader = styled("div")(({ theme }) => ({
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
