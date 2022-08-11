@@ -56,7 +56,6 @@ const viewGroups: View[][] = [
 
 export default function AppContainer() {
     const zoom = useRecoilValue(zoomPercentSelector);
-    const theme = useTheme();
 
     const [groupIndex, setGroupIndex] = useState(0);
     const [index, setIndex] = useState(0);
