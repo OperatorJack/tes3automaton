@@ -16,12 +16,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputComponent";
 import RespecView from "./views/RespecView";
 import SettingsView from "./views/SettingsView";
+import { zoomPercentSelector } from "../atoms";
+import { useRecoilValue } from "recoil";
 
 const drawerWidth = 240;
-
-const Dummy = () => {
-    return <>This is a placeholder component. Nothing fun yet.</>;
-};
 
 export type View = {
     text: string;
@@ -49,9 +47,10 @@ const viewGroups: View[][] = [
 export default function AppContainer() {
     const [groupIndex, setGroupIndex] = useState(0);
     const [index, setIndex] = useState(0);
+    const zoom = useRecoilValue(zoomPercentSelector);
 
     return (
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex", zoom: zoom }}>
             <CssBaseline />
             <AppBar
                 position="fixed"
