@@ -36,28 +36,23 @@ interface View {
     view: React.ReactElement;
 }
 
-const viewGroups: View[][] = [
-    [
-        {
-            text: "Asset Respec",
-            icon: <SettingsInputComponentIcon />,
-            view: <RespecView />,
-        },
-    ],
-    [
-        {
-            text: "Settings",
-            icon: <SettingsIcon />,
-            view: <SettingsView />,
-        },
-    ],
+const views: View[] = [
+    {
+        text: "Asset Respec",
+        icon: <SettingsInputComponentIcon />,
+        view: <RespecView />,
+    },
+    {
+        text: "Settings",
+        icon: <SettingsIcon />,
+        view: <SettingsView />,
+    },
 ];
 
 export default function AppContainer() {
     const zoom = useRecoilValue(zoomPercentSelector);
 
-    const [groupIndex, setGroupIndex] = useState(0);
-    const [index, setIndex] = useState(0);
+    const [viewIndex, setViewIndex] = useState(0);
 
     const [open, setOpen] = React.useState(false);
 
@@ -82,7 +77,7 @@ export default function AppContainer() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        {viewGroups[groupIndex][index].text}
+                        {views[viewIndex].text}
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -97,33 +92,17 @@ export default function AppContainer() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {viewGroups.map((viewGroup: View[], mapGroupIndex) => (
-                        <>
-                            {viewGroup.map((view, mapIndex) => {
-                                return (
-                                    <ListItem
-                                        key={view.text}
-                                        disablePadding
-                                        selected={
-                                            mapGroupIndex == groupIndex &&
-                                            mapIndex == index
-                                        }
-                                    >
-                                        <ListItemButton
-                                            onClick={() => {
-                                                setGroupIndex(mapGroupIndex);
-                                                setIndex(mapIndex);
-                                            }}
-                                        >
-                                            <ListItemIcon>
-                                                {view.icon}
-                                            </ListItemIcon>
-                                            <ListItemText primary={view.text} />
-                                        </ListItemButton>
-                                    </ListItem>
-                                );
-                            })}
-                        </>
+                    {views.map((view, index) => (
+                        <ListItem
+                            key={view.text}
+                            disablePadding
+                            selected={index == viewIndex}
+                        >
+                            <ListItemButton onClick={() => setViewIndex(index)}>
+                                <ListItemIcon>{view.icon}</ListItemIcon>
+                                <ListItemText primary={view.text} />
+                            </ListItemButton>
+                        </ListItem>
                     ))}
                 </List>
             </Drawer>
@@ -132,7 +111,7 @@ export default function AppContainer() {
                 component="main"
                 sx={{ flexGrow: 1, bgcolor: "background.default", p: 3, pt: 8 }}
             >
-                {viewGroups[groupIndex][index].view}
+                {views[viewIndex].view}
             </Box>
         </Box>
     );
@@ -163,7 +142,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
     overflowX: "hidden",
     width: `calc(${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.up("sm")]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
+        width: `calc(${theme.spacing(7)} + 1px)`,
     },
 });
 
