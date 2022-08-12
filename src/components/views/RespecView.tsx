@@ -143,8 +143,8 @@ export default function RespecView() {
                         <Divider variant="middle" />
                         <Box p={2}>
                             <TextField
-                                id="search"
-                                label="Search For"
+                                id="searchPrefix"
+                                label="Search For Prefix"
                                 variant="outlined"
                                 fullWidth
                             />
@@ -158,10 +158,18 @@ export default function RespecView() {
                             />
                         </Box>
                         <Divider variant="middle" />
-                        <Box p={2}>
+                        <Box p={2} pb={1}>
                             <TextField
                                 id="replace"
-                                label="Replace With"
+                                label="Replace With Prefix"
+                                variant="outlined"
+                                fullWidth
+                            />
+                        </Box>
+                        <Box p={2} pt={1}>
+                            <TextField
+                                id="subfolder"
+                                label="Replace Into Local Folder"
                                 variant="outlined"
                                 fullWidth
                             />
@@ -207,6 +215,23 @@ export default function RespecView() {
                         <Box p={2} pt={0}>
                             <Button onClick={onClick} variant="contained">
                                 Search
+                            </Button>
+                        </Box>
+                        <Divider variant="middle" />
+                        <Box p={2}>
+                            <FormControlLabel
+                                control={<Checkbox defaultChecked />}
+                                label="Execute in existing directory"
+                                title="Execute the operation without moving the files into a new subfolder structure. This is a dangerous action."
+                            />
+                        </Box>
+                        <Box p={2} pt={0}>
+                            <Button
+                                color="warning"
+                                onClick={onClick}
+                                variant="contained"
+                            >
+                                Execute
                             </Button>
                         </Box>
                     </Stack>
