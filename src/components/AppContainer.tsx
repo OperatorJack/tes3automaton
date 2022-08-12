@@ -25,6 +25,7 @@ import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputCompone
 import SettingsIcon from "@mui/icons-material/Settings";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+
 import RespecView from "./views/RespecView";
 import SettingsView from "./views/SettingsView";
 import { zoomPercentSelector } from "../atoms";
@@ -66,9 +67,7 @@ export default function AppContainer() {
                         aria-label="open drawer"
                         onClick={toggleOpen}
                         edge="start"
-                        sx={{
-                            marginRight: 4,
-                        }}
+                        sx={{ marginRight: 4 }}
                     >
                         {!open && <MenuIcon />}
                         {open && <MenuOpenIcon />}
