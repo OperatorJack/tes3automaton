@@ -25,8 +25,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { workingDirectoryState } from "../../atoms";
-
-import { collectFiles } from "../../commands";
+import { collectFiles, respec } from "../../commands";
 import { SelectDirectoryButton } from "./settings/SelectDirectoryButton";
 import {
     LetterLowerCaseIcon,
@@ -110,7 +109,14 @@ export default function RespecView() {
 
     const onClick = async function () {
         try {
-            const files = await collectFiles(directory, ["nif"]);
+            const files = await respec({
+                rootDir: directory,
+                searchFor: "",
+                replaceWith: "",
+                useRegex: false,
+                caseSensitive: false,
+                previewOnly: false,
+            });
 
             console.log(files);
             setFiles(files as string[]);
