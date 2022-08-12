@@ -159,7 +159,7 @@ export default function RespecView() {
 
     return (
         <Grid container spacing={2}>
-            <Grid item xl={2}>
+            <Grid item xs={12} xl={2}>
                 <Paper elevation={3}>
                     <Box m={3} p={2}>
                         <Typography variant="h6">Description</Typography>
@@ -293,7 +293,7 @@ export default function RespecView() {
                     </Stack>
                 </Paper>
             </Grid>
-            <Grid item xl={10}>
+            <Grid item xs={12} xl={10}>
                 <Paper elevation={3}>
                     <Box m={3} p={3}>
                         <TableContainer>
