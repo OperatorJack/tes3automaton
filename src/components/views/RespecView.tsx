@@ -105,16 +105,48 @@ function Row(props: { row: string }) {
 
 export default function RespecView() {
     const directory = useRecoilValue(workingDirectoryState);
+    const [formState, setFormState] = useState({
+        searchFor: "",
+        replaceWith: "",
+        useRegex: false,
+        caseSensitive: false,
+    });
     const [files, setFiles] = useState([] as string[]);
+
+    const handleFormTextChange = function (evt: {
+        target: {
+            value: any;
+            name: any;
+        };
+    }) {
+        const value = evt.target.value;
+        handleFormChange(evt.target.name, value);
+    };
+    const handleFormCheckboxChange = function (evt: {
+        target: {
+            checked: boolean;
+            name: any;
+        };
+    }) {
+        const value = evt.target.checked;
+        handleFormChange(evt.target.name, value);
+    };
+    const handleFormChange = function (name: string, value: any) {
+        console.log("Changing %s to %s", name, value);
+        setFormState({
+            ...formState,
+            [name]: value,
+        });
+    };
 
     const onClick = async function () {
         try {
             const files = await respec({
                 rootDir: directory,
-                searchFor: "",
-                replaceWith: "",
-                useRegex: false,
-                caseSensitive: false,
+                searchFor: formState.searchFor,
+                replaceWith: formState.replaceWith,
+                useRegex: formState.useRegex,
+                caseSensitive: formState.caseSensitive,
                 previewOnly: false,
             });
 
@@ -149,27 +181,45 @@ export default function RespecView() {
                         <Divider variant="middle" />
                         <Box p={2}>
                             <TextField
-                                id="searchPrefix"
+                                id="searchFor"
                                 label="Search For Prefix"
                                 variant="outlined"
                                 fullWidth
+                                value={formState.searchFor}
+                                onChange={handleFormTextChange}
+                                name="searchFor"
                             />
                             <FormControlLabel
-                                control={<Checkbox defaultChecked />}
+                                control={
+                                    <Checkbox
+                                        name="useRegex"
+                                        onChange={handleFormCheckboxChange}
+                                        value={formState.useRegex}
+                                    />
+                                }
                                 label="Use regular expressions"
                             />
                             <FormControlLabel
-                                control={<Checkbox defaultChecked />}
+                                control={
+                                    <Checkbox
+                                        name="caseSensitive"
+                                        onChange={handleFormCheckboxChange}
+                                        value={formState.caseSensitive}
+                                    />
+                                }
                                 label="Case Sensitive"
                             />
                         </Box>
                         <Divider variant="middle" />
                         <Box p={2} pb={1}>
                             <TextField
-                                id="replace"
+                                id="replaceWith"
                                 label="Replace With Prefix"
                                 variant="outlined"
                                 fullWidth
+                                value={formState.replaceWith}
+                                onChange={handleFormTextChange}
+                                name="replaceWith"
                             />
                         </Box>
                         <Box p={2} pt={1}>
