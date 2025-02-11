@@ -51,13 +51,21 @@ def batch_img(
         help=ALLOWED_IMAGE_FORMATS_STR,
         autocompletion=complete_image_format
     ),
-    compression: str = typer.Option(
+    compression: Optional[str] = typer.Option(
         "",
         "--compression",
         "-c",
         prompt="To format compression?",
         help=COMPRESSION_TYPES_STR,
-        autocompletion=complete_compression_type
+        autocompletion=complete_compression_type,
+        
+    ),
+    auto_compression: str = typer.Option(
+        True,
+        "--auto-compression",
+        "-ac",
+        prompt="Use auto compression?",
+        help="If enabled, the image will be searched for alpha channels and an appropriate compression is determined for the output iamge format.",
     ),
 ) -> None:
     """Convert the images in directory_path from from_format to to_format."""
@@ -73,13 +81,23 @@ def batch_img(
     convert_count = 0
     for from_file in from_files:
         with Image(filename=from_file) as img:
-            img.compression = compression
+            selected_compression = compression
+            if (auto_compression):
+                is_alpha = img.alpha_channel
+                if (is_alpha):
+                    if (to_format == "dds"):
+                        selected_compression = "dxt5"
+                    else:
+                        selected_compression = "dxt1"
+            else:
+                img.compression = selected_compression
+
             base_file = from_file.stem
             to_file = f"{to_directory_path}\\{base_file}.{to_format}"
             img.save(filename=to_file)
             
             convert_count += 1
-            typer.secho(f"Converted {from_file} -> {to_file}")
+            typer.secho(f"Converted {from_file} -> {to_file} (Compression: {selected_compression})")
     
     
     typer.secho()

@@ -12,8 +12,8 @@ A CLI tool for automating some repetitive modding actions in TES III: Morrowind.
 The CLI is not currently published or installable. You must run it locally through python.
 
 - Navigate to the directory containing this README in your terminal.
-- Run `.\.venv\Scripts\Activate.ps1` or the appropriate command for your OS to activate the Python virtual environment.
-- Run `pip install -r .\requirements.txt` to install the project dependencies.
+- Run `.\.venv\Scripts\Activate.ps1` or the appropriate command for your OS to activate the Python virtual environment. You must run this each time your want to use the CLI.
+- Run `pip install -r .\requirements.txt` to install the project dependencies. You must run this after updating the code repository.
 
 You can now run the CLI. Try to run it with `python -m src --help`.
 
