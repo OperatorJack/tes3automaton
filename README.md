@@ -25,8 +25,16 @@ Allows batch conversion of images between Morrowind image formats and PNG format
 
 ex. usage:
 
+Convert PNG to DXT5
+
 ```
 python -m src batch-img -tp "D:\Morrowind-Tools\tes3automaton-working\input" -f "png" -fp "D:\Morrowind-Tools\tes3automaton-working\output" -t "dds" -c "dxt5"
+```
+
+Convert PNG to DDS with auto-comppression (choose DXT1 / DXT5 based on alpha properties)
+
+```
+python -m src batch-img -tp "D:\Morrowind-Tools\tes3automaton-working\input" -f "png" -fp "D:\Morrowind-Tools\tes3automaton-working\output" -t "dds" -ac "True"
 ```
 
 Use `tes3automaton batch-img --help` for more information.
